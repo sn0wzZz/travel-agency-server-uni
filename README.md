@@ -1,2 +1,6 @@
-#Backend server for a university task
-Node.js and Express
+# Travel Agency Server
+
+A university task I was given || Node.js, Express
+
+
+
