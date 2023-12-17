@@ -46,7 +46,6 @@ app.post(
     check('startDate')
       .optional()
       .isDate()
-      .toDate()
       .withMessage('Invalid date format'),
     check('duration')
       .optional()
@@ -73,7 +72,6 @@ app.put(
     check('startDate')
       .optional()
       .isDate()
-      .toDate()
       .withMessage('Invalid date format'),
     check('duration')
       .optional()
