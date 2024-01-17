@@ -26,7 +26,7 @@ export const deleteHoliday = (req, res) => {
 
     if (index !== -1) {
       holidays.splice(index, 1)
-      res.json({ success: true, message: 'Holiday deleted successfully' })
+      res.status(204).json({ success: true, message: 'Holiday deleted successfully' })
     } else {
       res.status(404).json({ error: 'Holiday not found' })
     }
@@ -67,7 +67,7 @@ export const getHolidays = (req, res) => {
 
     console.log(filteredHolidays)
 
-    res.json({ ...filteredHolidays })
+    res.status(200).json({ ...filteredHolidays })
   } catch (error) {
     console.error('Error fetching holidays:', error)
     res.status(500).json({ error: 'Internal Server Error' })
@@ -81,7 +81,7 @@ export const getHoliday = (req, res) => {
     const holiday = holidays.find((holiday) => holiday.id === id)
 
     if (holiday) {
-      res.json({ ...holiday })
+      res.status(200).json({ ...holiday })
     } else {
       res.status(404).json({ error: 'Holiday not found' })
     }
@@ -106,7 +106,9 @@ export const updateHoliday = (req, res) => {
       holidayToUpdate.freeSlots = freeSlots
       holidayToUpdate.location = location
 
-      res.json({ success: true, message: 'Holiday updated successfully' })
+      res
+        .status(200)
+        .json({ success: true, message: 'Holiday updated successfully' })
     } else {
       res.status(404).json({ error: 'Holiday not found' })
     }
@@ -127,7 +129,6 @@ export const createLocation = (req, res) => {
     locations.push(newLocation)
     console.log('locations ', locations)
 
-    // Send a JSON response to the front-end
     res.status(201).json({ locations })
   } catch (error) {
     console.error('Error creating location:', error)
@@ -139,13 +140,13 @@ export const deleteLocation = (req, res) => {
   const { id } = req.params
 
   try {
-    // Find the index of the location with the specified ID
     const index = locations.findIndex((location) => location.id === id)
 
-    // If the location is found, remove it from the array
     if (index !== -1) {
       locations.splice(index, 1)
-      res.json({ success: true, message: 'Location deleted successfully' })
+      res
+        .status(204)
+        .json({ success: true, message: 'Location deleted successfully' })
     } else {
       res.status(404).json({ error: 'Location not found' })
     }
@@ -157,8 +158,7 @@ export const deleteLocation = (req, res) => {
 
 export const getLocations = (req, res) => {
   try {
-    // Send a JSON response with the locations array
-    res.json({ ...locations })
+    res.status(200).json({ ...locations })
   } catch (error) {
     console.error('Error fetching locations:', error)
     res.status(500).json({ error: 'Internal Server Error' })
@@ -169,12 +169,10 @@ export const getLocation = (req, res) => {
   const { id } = req.params
 
   try {
-    // Find the location with the specified ID
     const location = locations.find((location) => location.id === id)
 
-    // If the location is found, send it in the response
     if (location) {
-      res.json({ ...location })
+      res.status(200).json({ ...location })
     } else {
       res.status(404).json({ error: 'Location not found' })
     }
@@ -243,7 +241,7 @@ export const getReservation = (req, res) => {
   const reservation = reservations.find((r) => r.id === id)
 
   if (reservation) {
-    res.json(reservation)
+    res.status(200).json(reservation)
   } else {
     res.status(404).json({ error: 'Reservation not found' })
   }
@@ -257,7 +255,7 @@ export const updateReservation = (req, res) => {
     reservation.contactName = contactName
     reservation.phoneNumber = phoneNumber
     console.log('reservations ', reservations)
-    res.json(reservation)
+    res.status(200).json(reservation)
   } else {
     res.status(404).json({ error: 'Reservation not found' })
   }
